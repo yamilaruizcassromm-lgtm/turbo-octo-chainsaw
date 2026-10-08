@@ -1,0 +1,156 @@
+/* ============================================================
+   PALETA DE COLORES Y VARIABLES (MORADO MEDIO OSCURO NEÓN)
+   ============================================================ */
+:root {
+    --bg-main: #0a0412;
+    --bg-card: rgba(25, 12, 41, 0.75);
+    --purple-dark: #1e0d36;
+    --purple-medium: #4a157d;
+    --purple-primary: #7b2cbf;
+    --purple-accent: #9d4edd;
+    --purple-neon: #c77dff;
+    --purple-glow: rgba(199, 125, 255, 0.6);
+    --purple-glow-soft: rgba(157, 78, 221, 0.25);
+    --text-light: #f8f6fc;
+    --text-muted: #bdaecf;
+    --border-color: rgba(157, 78, 221, 0.3);
+    --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-light);
+    line-height: 1.7;
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(123, 44, 191, 0.18) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(199, 125, 255, 0.15) 0%, transparent 45%);
+    background-attachment: fixed;
+}
+
+/* ============================================================
+   BARRA DE CARGA SUPERIOR (PROGRESS BAR)
+   ============================================================ */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--purple-primary), var(--purple-accent), var(--purple-neon));
+    box-shadow: 0 0 15px var(--purple-neon);
+    z-index: 10000;
+    transition: width 0.1s linear;
+}
+
+/* ============================================================
+   EFECTO DE RASTRO Y FLECHA MORADA
+   ============================================================ */
+.trail-particle {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--purple-neon);
+    pointer-events: none;
+    z-index: 9999;
+    box-shadow: 0 0 12px var(--purple-neon), 0 0 24px var(--purple-primary);
+    transition: transform 0.2s ease, opacity 0.4s ease;
+    transform: translate(-50%, -50%);
+}
+
+/* ============================================================
+   NAVEGACIÓN (HEADER)
+   ============================================================ */
+header {
+    position: sticky;
+    top: 0;
+    background: rgba(10, 4, 18, 0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    padding: 1.1rem 2rem;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 10px rgba(199, 125, 255, 0.3);
+}
+
+.logo i {
+    color: var(--purple-neon);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.2rem;
+}
+
+.nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition-smooth);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+/* ILUMINACIÓN EN MENÚ AL ACERCAR LA FLECHA */
+.nav-links a:hover {
+    color: #ffffff;
+    background: rgba(157, 78, 221, 0.2);
+    border-color: var(--purple-neon);
+    box-shadow: 0 0 15px var(--purple-glow-soft);
+    text-shadow: 0 0 8px var(--purple-neon);
+}
+
+/* ============================================================
+   SECCIONES Y TARJETAS ILUMINADAS AL PASAR EL CURSOR
+   ============================================================ */
+main {
+    max-width: 1100px;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: var(--transition-smooth);
+}
+
+/* ILUMINACIÓN DE TARJETAS AL ACERCAR LA FLECHITA */
+.card:hover {
+    border-color: var(--purple-neon);
+    box-shadow: 0 0 35px var(--purple-glow-soft), inset 0 0 15px rgba(199, 125, 255, 0.05);
+    transform: translateY(-2px);
+}

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lo que aprendí del video | Trabajo Práctico BTI</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-main: #0a0412;
+            --bg-card: rgba(25, 12, 41, 0.75);
+            --purple-dark: #1e0d36;
+            --purple-medium: #4a157d;
+            --purple-primary: #7b2cbf;
+            --purple-accent: #9d4edd;
+            --purple-neon: #c77dff;
+            --purple-glow: rgba(199, 125, 255, 0.6);
+            --purple-glow-soft: rgba(157, 78, 221, 0.25);
+            --text-light: #f8f6fc;
+            --text-muted: #bdaecf;
+            --border-color: rgba(157, 78, 221, 0.3);
+            --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-light);
+            line-height: 1.7;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(123, 44, 191, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(199, 125, 255, 0.15) 0%, transparent 45%);
+            background-attachment: fixed;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--purple-primary), var(--purple-accent), var(--purple-neon));
+            box-shadow: 0 0 15px var(--purple-neon);
+            z-index: 10000;
+            transition: width 0.1s linear;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(10, 4, 18, 0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1.1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.35rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 10px rgba(199, 125, 255, 0.3);
+        }
+
+        .logo i {
+            color: var(--purple-neon);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            border: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            background: rgba(157, 78, 221, 0.2);
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 15px var(--purple-glow-soft);
+            text-shadow: 0 0 8px var(--purple-neon);
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 35px var(--purple-glow-soft), inset 0 0 15px rgba(199, 125, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(45, 21, 72, 0.85), rgba(15, 6, 28, 0.95));
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(199, 125, 255, 0.4);
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--purple-primary), var(--purple-neon));
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #ffffff 0%, var(--purple-neon) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .meta-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2rem;
+            padding-top: 1.8rem;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .meta-item {
+            background: rgba(10, 4, 18, 0.6);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+        }
+
+        .meta-item:hover {
+            border-color: var(--purple-neon);
+            background: rgba(45, 21, 72, 0.5);
+            box-shadow: 0 0 20px var(--purple-glow-soft);
+            transform: translateY(-3px);
+        }
+
+        .meta-item span {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta-item strong {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        h2.section-title {
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.6rem;
+        }
+
+        h2.section-title i {
+            color: var(--purple-neon);
+            filter: drop-shadow(0 0 8px var(--purple-neon));
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .concept-card {
+            background: rgba(10, 4, 18, 0.65);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.6rem;
+            transition: var(--transition-smooth);
+        }
+
+        .concept-card:hover {
+            transform: translateY(-6px);
+            background: rgba(45, 21, 72, 0.6);
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 30px var(--purple-glow);
+        }
+
+        .concept-card h3 {
+            color: var(--purple-neon);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.15rem;
+        }
+
+        /* --- ESTILOS DEL ACORDEÓN (CUESTIONARIO) --- */
+        .faq-item {
+            background: rgba(10, 4, 18, 0.55);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            margin-bottom: 1.1rem;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .faq-item:hover {
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 25px var(--purple-glow-soft);
+            background: rgba(30, 13, 54, 0.6);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.3rem 1.6rem;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.05rem;
+            font-weight: 600;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            font-family: inherit;
+        }
+
+        .faq-question:hover {
+            color: var(--purple-neon);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.6rem;
+            background: rgba(0, 0, 0, 0.25);
+            color: var(--text-muted);
+        }
+
+        /* CLASE QUE ACTIVA EL DESPLIEGUE */
+        .faq-item.active {
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 30px var(--purple-glow);
+            background: rgba(45, 21, 72, 0.5);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 1.2rem 1.6rem 1.6rem 1.6rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: var(--purple-neon);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: rgba(10, 4, 18, 0.95);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            h1 { font-size: 1.9rem; }
+            .card { padding: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-code"></i>
+                <span>BTI Nacional Escalada</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#conceptos">Conceptos</a></li>
+                <li><a href="#cuestionario">Cuestionario</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="card hero-card">
+            <span class="badge">Trabajo Práctico: Video y Página Web</span>
+            <h1>Lo que aprendí del video</h1>
+            <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto;">
+                Mi resumen personal y análisis técnico de lo aprendido sobre Desarrollo Web.
+            </p>
+
+            <div class="meta-info">
+                <div class="meta-item">
+                    <span>Estudiante:</span>
+                    <strong>Alejandro Cardozo</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Curso / Sección:</span>
+                    <strong>2.º BTI</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Asignatura:</span>
+                    <strong>Software / Desarrollo Web</strong>
+                </div>
+                <div class="meta-item">
+                    <span>Institución:</span>
+                    <strong>Colegio Nac. EMD Asunción Escalada</strong>
+                </div>
+            </div>
+        </section>
+
+        <section id="introduccion" class="card">
+            <h2 class="section-title"><i class="fa-solid fa-file-lines"></i> Introducción</h2>
+            <p>
+                En este trabajo práctico reuní lo más importante que capté al ver el video sobre desarrollo web. La idea fue entender cómo se conectan las tecnologías que usamos a diario en informática para armar una página desde cero, aplicando buenas prácticas y viendo cómo todo cobra sentido cuando combinamos diseño, lógica y bases de datos.
+            </p>
+        </section>
+
+        <section id="conceptos" class="card">
+            <h2 class="section-title"><i class="fa-solid fa-brain"></i> Conceptos Fundamentales</h2>
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <h3><i class="fa-brands fa-html5"></i> Estructura Web (HTML5)</h3>
+                    <p>Es la base o el esqueleto de la página. Sirve para organizar los textos, imágenes y secciones con significado.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fa-brands fa-css3-alt"></i> Estilos y Diseño (CSS3)</h3>
+                    <p>Es lo que le da color, forma y vida al sitio. Permite acomodar los elementos y hacer que se vea bien en celulares y computadoras.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fa-brands fa-js"></i> Interactividad (JavaScript)</h3>
+                    <p>El motor dinámico. Permite que la página responda a las acciones del usuario, como clics, animaciones o validaciones.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fa-solid fa-database"></i> Bases de Datos (SQL)</h3>
+                    <p>Donde se guarda la información de manera ordenada para poder consultar, actualizar o borrar datos cuando haga falta.</p>
+                </div>
+                <div class="concept-card">
+                    <h3><i class="fa-solid fa-cloud-arrow-up"></i> Publicación y Hosting</h3>
+                    <p>El paso final para subir nuestro proyecto a la nube y lograr que cualquier persona en internet pueda entrar a verlo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cuestionario" class="card">
+            <h2 class="section-title"><i class="fa-solid fa-list-check"></i> Cuestionario Resuelto</h2>
+            <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                Hacé clic en las preguntas para desplegar mis respuestas:
+            </p>
+
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>1. ¿Cuál es el tema principal del video? Explica de qué trata.</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>El video muestra paso a paso cómo se construye una aplicación web moderna. Se centra en explicar cómo trabajan juntas las tecnologías del lado del cliente y del servidor para crear un sitio que sea funcional, rápido y fácil de usar.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>2. ¿Qué problema o necesidad tecnológica se aborda?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Aborda la necesidad de saber estructurar bien un proyecto web. Muchas veces los sitios son lentos o desordenados; el video enseña cómo organizar el código para que las páginas carguen rápido, se vean bien en cualquier pantalla y manejen datos sin errores.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>3. ¿Cuáles son los cinco conceptos más importantes? Define cada uno.</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p><strong>1. HTML5:</strong> El esqueleto de la web para definir contenidos.<br>
+                        <strong>2. CSS3:</strong> El diseño visual, colores y distribución.<br>
+                        <strong>3. JavaScript:</strong> Otorga dinamismo e interactividad en tiempo real.<br>
+                        <strong>4. SQL:</strong> Lenguaje para comunicarnos con las bases de datos.<br>
+                        <strong>5. Responsive Design:</strong> La técnica para que todo se adapte al tamaño del celular o monitor.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>4. ¿Qué herramientas, programas o tecnologías se mencionan y para qué sirven?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Se utiliza VS Code para escribir el código, navegadores web para probar cómo va quedando, sistemas como MySQL para guardar información en tablas y servicios como GitHub o Netlify para publicar el sitio en internet.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>5. ¿Qué procedimientos o pasos se explican? Preséntalos en orden.</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <ol style="margin-left: 1.2rem;">
+                            <li>Maquetar la estructura inicial usando etiquetas HTML.</li>
+                            <li>Darle estilos, colores y fuentes con CSS.</li>
+                            <li>Agregar la lógica e interactividad con JS.</li>
+                            <li>Realizar pruebas locales para corregir posibles fallas.</li>
+                            <li>Desplegar la página en un servidor para que sea accesible públicamente.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>6. ¿Qué ejemplos prácticos aparecen? Explica uno detalladamente.</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Un buen ejemplo que mostraron fue la creación de un formulario de registro. Primero arman los campos en HTML, luego usan JS para verificar que el usuario no deje recuadros vacíos y, por último, envían esa información a una base de datos SQL.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>7. ¿Qué conocimientos previos son necesarios para comprender lo explicado?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>No hace falta ser un experto, pero ayuda bastante tener una base de lógica de programación, saber manejar archivos en la computadora y entender cómo funciona internet a nivel general.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>8. ¿Qué ventajas o beneficios ofrece la tecnología o procedimiento?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>El principal beneficio es conseguir que el sitio sea rápido, seguro y accesible. Además, al escribir código limpio y ordenado, si el día de mañana querés cambiar algo, es mucho más fácil de modificar.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>9. ¿Qué dificultades, errores o precauciones deben considerarse?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Hay que tener cuidado con no dejar brechas de seguridad al conectar la base de datos (para evitar inyecciones SQL), revisar que el diseño no se rompa en celulares y comprobar que no queden rutas o enlaces rotos.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>10. ¿Cómo aplicarías lo aprendido en un proyecto informático real?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Lo aplicaría diseñando una página funcional para un negocio local o incluso creando un sistema para el colegio, donde se puedan consultar avisos, horarios o descargar archivos de forma sencilla.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>11. ¿Qué parte del video consideras más importante y por qué?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Para mí, la parte clave fue la integración entre JavaScript y la base de datos. Ahí es donde te das cuenta de cómo una página pasa de ser algo puramente visual a convertirse en una aplicación útil e interactiva.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>12. ¿Qué conclusión personal o aprendizaje te deja este material?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Me sirvió para entender el panorama completo del desarrollo web. Me di cuenta de que no se trata solo de copiar código, sino de planificar bien la estructura para que la experiencia de quien usa la página sea la mejor posible.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Trabajo Práctico de Software | Alejandro Cardozo - 2.º BTI</p>
+    </footer>
+
+    <script>
+        // Script ejecutado al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const button = item.querySelector('.faq-question');
+                
+                button.addEventListener('click', () => {
+                    const isOpen = item.classList.contains('active');
+                    
+                    // Cierra todas las demás respuestas para dejar solo una abierta a la vez
+                    faqItems.forEach(i => i.classList.remove('active'));
+
+                    // Si no estaba desplegado, lo activa
+                    if (!isOpen) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+
+            // Actualización de la barra superior de progreso según desplazamiento
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+            });
+        });
+    </script>
+</body>
+</html>
